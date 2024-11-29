@@ -18,14 +18,14 @@ class CpFormulation:
         return self.mdl.get_obje
 
 
-def solve(cp_formulation: CpFormulation, time_limit: int) -> tuple[str, int, int]:
+def solve(cp_formulation: CpFormulation, time_limit: int) -> [int, int]:
     params = {'TimeLimit': time_limit}
     mdl = cp_formulation.mdl
     mdl.set_parameters(params)
     solver = CpoSolver(model=mdl)
     result = solver.solve()
     if result:
-        return result.search_status, result.solution.objective_values[0], result.solution.objective_gaps[0]
+        return result.solution.objective_values[0], result.solution.objective_gaps[0]
 
     return "error", -1, -1
 

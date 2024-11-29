@@ -18,10 +18,10 @@ if __name__ == '__main__':
     problems = 'j30'
     input_directory = 'resources/' + problems
     output_directory = 'output/'
-    time_limit = 2
+    execution_time_limit_seconds = 2
     solve_mip = False
 
-    output_file_name = problems + '_tl' + str(time_limit) + '.csv'
+    output_file_name = problems + '_tl' + str(execution_time_limit_seconds) + '.csv'
     output_file_path = os.path.join(output_directory, output_file_name)
     initialize_csv(output_file_path)
 
@@ -39,5 +39,5 @@ if __name__ == '__main__':
             mip.mdl.solve()
         else:
             cp_formulation = build_cp_formulation(rcpsp)
-            [status, mk, mk_optimality_gap] = solve(cp_formulation, time_limit)
-            append_to_csv(output_file_path, [status, mk, mk_optimality_gap])
+            [mk, mk_optimality_gap] = solve(cp_formulation, execution_time_limit_seconds)
+            append_to_csv(output_file_path, [input_file_name, mk, mk_optimality_gap])
