@@ -30,7 +30,7 @@ if __name__ == '__main__':
         if not valid_input_file:
             continue
 
-        inputfile_path = os.path.join(input_directory, input_file_name)
+        input_file_path = os.path.join(input_directory, input_file_name)
 
         rcpsp = read_from_psplib_file(input_file_path)
 
