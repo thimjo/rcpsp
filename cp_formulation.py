@@ -42,45 +42,45 @@ def build_cp_formulation(rcpsp: RCPSP) -> CpFormulation:
 
 
 def build_intervals(rcpsp: RCPSP) -> list[CpoIntervalVar]:
+    raise NotImplementedError("Interval-variables have not been created!")
     intervals = []
     for i in range(0, rcpsp.num_tasks):
-        duration = rcpsp.duration[i]
-        interval = interval_var(name=str(i))
-        interval.set_size_min(duration)
-        interval.set_size_max(duration)
+        # todo: create and initialize an interval per task
+        interval = ...
         intervals.append(interval)
 
     return intervals
 
 
 def build_precedences(mdl: CpoModel, rcpsp: RCPSP, intervals: list[CpoIntervalVar]):
+    raise NotImplementedError("Precedence constraints have not been formulated!")
     for edge in rcpsp.precedences:
-        pred = intervals[edge[0]]
-        suc = intervals[edge[1]]
-        precedence = modeler.end_before_start(pred, suc)
+        # todo: formulate precedence-constraint
+        precedence = ...
         mdl.add(precedence)
 
 
 def build_resource_constraints(mdl: CpoModel, rcpsp: RCPSP, intervals: list[CpoIntervalVar]):
+    raise NotImplementedError("Resource constraints have not been formulated!")
     num_resources = len(rcpsp.capacity)
-
     for r in range(0, num_resources):
-        c = rcpsp.capacity[r]
-        cum_r = modeler.step_at(0, c)
+        capacity = rcpsp.capacity[r]
+        capacity_function = modeler.step_at(0, capacity)
+        demand_function = modeler.step_at(0, 0)
         for i in range(0, len(intervals)):
-            interval = intervals[i]
-            req = rcpsp.requirements[i][r]
-            if req > 0:
-                cum_r -= modeler.pulse(interval, req)
-        mdl.add(cum_r >= 0)
+            # todo: add task-demand
+            task_demand = ...
+            demand_function += task_demand
+        # todo: formulate resource constraint
+        resource_constraint = ...
+        mdl.add(resource_constraint)
 
 
 def build_objective(mdl: CpoModel, intervals: list[CpoIntervalVar]) -> CpoExpr:
-    ends = []
-    for interval in intervals:
-        ends.append(modeler.end_of(interval))
+    raise NotImplementedError("The expression for the objective function has not been formulated!")
+    # todo: formulate the makespan expression
+    mk = ...
 
-    mk = modeler.max(ends)
     objective = modeler.minimize(mk)
     mdl.add(objective)
 

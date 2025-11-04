@@ -19,7 +19,7 @@ if __name__ == '__main__':
     input_directory = 'resources/' + problems
     output_directory = 'output/'
     execution_time_limit_seconds = 2
-    solve_mip = False
+    solve_mip = True
 
     output_file_name = problems + '_tl' + str(execution_time_limit_seconds) + '.csv'
     output_file_path = os.path.join(output_directory, output_file_name)
