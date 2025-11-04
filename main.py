@@ -1,9 +1,11 @@
 import os
 
+import ortools_formulation
 from rcpsp import read_from_psplib_file
 from cp_formulation import build_cp_formulation
 from cp_formulation import solve
 from mip_formulation import build_mip_formulation
+from ortools_formulation import build_or_tools_formulation
 from write_output import initialize_csv, append_to_csv
 
 
@@ -20,6 +22,7 @@ if __name__ == '__main__':
     output_directory = 'output/'
     execution_time_limit_seconds = 2
     solve_mip = True
+    use_or_tools = False
 
     output_file_name = problems + '_tl' + str(execution_time_limit_seconds) + '.csv'
     output_file_path = os.path.join(output_directory, output_file_name)
@@ -38,6 +41,10 @@ if __name__ == '__main__':
             mip = build_mip_formulation(rcpsp)
             mip.mdl.solve()
         else:
-            cp_formulation = build_cp_formulation(rcpsp)
-            [mk, mk_optimality_gap] = solve(cp_formulation, execution_time_limit_seconds)
-            append_to_csv(output_file_path, [input_file_name, mk, mk_optimality_gap])
+            if use_or_tools:
+                formulation = build_or_tools_formulation(rcpsp)
+                [mk, mk_optimality_gap] = ortools_formulation.solve(formulation)
+            else:
+                cp_formulation = build_cp_formulation(rcpsp)
+                [mk, mk_optimality_gap] = solve(cp_formulation, execution_time_limit_seconds)
+                append_to_csv(output_file_path, [input_file_name, mk, mk_optimality_gap])
