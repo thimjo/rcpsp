@@ -1,2 +1,1 @@
-The slides of the workshop can be found in:
-https://docs.google.com/presentation/d/11k_FaOmEogdkEJPF-_zko13iHtwAZmvUK21PGOeX7Cg/edit?usp=sharing
+The slides of the 2025 workshop can be found [here](https://docs.google.com/presentation/d/1wBfp_yA-JUtJQvkcje3thrTM5Zn7TEfrjHwXnHnPUqw/edit?usp=sharing).
